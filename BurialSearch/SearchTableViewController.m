@@ -7,8 +7,8 @@
 //
 
 #import "SearchTableViewController.h"
-#import "Tomb.h"
 #import "TombDetailViewController.h"
+#import "Tomb.h"
 
 @interface SearchTableViewController ()
 
@@ -16,30 +16,48 @@
 
 @implementation SearchTableViewController
 
-@synthesize tombArray = _tombArray;
-@synthesize searchBar = _searchBar,
-            searchResults = _searchResults;
+@synthesize tombArray = _tombArray,
+            searchBar = _searchBar,
+            filteredTombArray = _filteredTombArray;
 
 
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller
-shouldReloadTableForSearchString:(NSString *)searchString
-{
-    [self filterContentForSearchText:searchString
-                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
-                                      objectAtIndex:[self.searchDisplayController.searchBar
-                                                     selectedScopeButtonIndex]]];
-    
-    return YES;
-}
+
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-    NSPredicate *resultPredicate = [NSPredicate
-                                    predicateWithFormat:@"SELF.lastName contains[cd] %@",
-                                    searchText];
+	// Update the filtered array based on the search text and scope.
+	
+    // Remove all objects from the filtered search array
+	[self.filteredTombArray removeAllObjects];
     
-    _searchResults = [_tombArray filteredArrayUsingPredicate:resultPredicate];
+	// Filter the array using NSPredicate
+    NSPredicate *predicate;
+    NSArray *tempArray;
+    
+    if([scope isEqualToString:@"Name"])
+    {
+        predicate = [NSPredicate predicateWithFormat:@"(fullName CONTAINS[cd] %@) OR (firstAndLastName CONTAINS[cd] %@)", searchText, searchText];
+        tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
+    }
+    else if ([scope isEqualToString:@"Y.O.D."])
+    {
+        predicate = [NSPredicate predicateWithFormat:@"(deathDate CONTAINS[cd] %@)", searchText];
+        tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
+    }
+    else if ([scope isEqualToString:@"Age"])
+    {
+        predicate = [NSPredicate predicateWithFormat:@"(years CONTAINS[cd] %@)", searchText];
+        tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
+    }
+    else if ([scope isEqualToString:@"Section"])
+    {
+        predicate = [NSPredicate predicateWithFormat:@"(section CONTAINS[cd] %@)", searchText];
+        tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
+    }
+    
+    _filteredTombArray = [NSMutableArray arrayWithArray:tempArray];
 }
+
 
 - (void) readLocalJSON
 {
@@ -107,83 +125,77 @@ shouldReloadTableForSearchString:(NSString *)searchString
 {
     [super viewDidLoad];
     
+    // style the search bar
+    [_searchBar setShowsScopeBar:NO];
+    [_searchBar sizeToFit];
+    
+    // Hide the search bar until user scrolls up
+    CGRect newBounds = self.tableView.bounds;
+    newBounds.origin.y = newBounds.origin.y + _searchBar.bounds.size.height;
+    self.tableView.bounds = newBounds;
+    
     // read local JSON file
     [self readLocalJSON];
+    
+    // initialize the array to hold search results
+    _filteredTombArray = [NSMutableArray arrayWithCapacity:[_tombArray count]];
+    
+    // Reload the table
+    [[self tableView] reloadData];
 }
 
-#pragma mark - Table view data source
+-(IBAction)goToSearch:(id)sender
+{
+    [_searchBar becomeFirstResponder];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return [_searchResults count];
-        
+        return [_filteredTombArray count];
     } else {
         return [_tombArray count];
-        
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"TombCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     
-    if (tableView == self.searchDisplayController.searchResultsTableView)
+    Tomb *tomb = nil;
+    
+    // selecct the tombs
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        tomb = [self.filteredTombArray objectAtIndex:indexPath.row];
+    } else {
+        tomb = [self.tombArray objectAtIndex:indexPath.row];
+    }
+     
+    // configure the srtings
+    if([tomb.middleName isEqual:nil] || [tomb.middleName isEqual:NULL] || [tomb.middleName isEqualToString:@""])
     {
-        Tomb *tomb = [self.searchResults objectAtIndex:indexPath.row];
-        
-        if([tomb.middleName isEqual:nil] || [tomb.middleName isEqual:NULL] || [tomb.middleName isEqualToString:@""])
-        {
-            cell.textLabel.text = [NSString stringWithFormat: @"%@ %@", tomb.firstName, tomb.lastName, nil];
-        }
-        else
-        {
-            if([tomb.middleName length] == 1)
-            {
-                tomb.middleName = [tomb.middleName stringByAppendingString:@"."];
-            }
-            cell.textLabel.text = [NSString stringWithFormat: @"%@ %@ %@", tomb.firstName, tomb.middleName ,tomb.lastName, nil];
-        }
-        
-        
-        if(![tomb.birthDate isEqualToString:@""] && ![tomb.deathDate isEqualToString:@""])
-        {
-            cell.detailTextLabel.text = [NSString stringWithFormat: @"%@ - %@", [tomb.birthDate substringToIndex:4], [tomb.deathDate substringToIndex:4], nil];
-        }
-        else
-        {
-            cell.detailTextLabel.text = @"";
-        }
+        cell.textLabel.text = [NSString stringWithFormat: @"%@ %@", tomb.firstName, tomb.lastName, nil];
     }
     else
     {
-        Tomb *tomb = [self.tombArray objectAtIndex:indexPath.row];
-        
-        if([tomb.middleName isEqual:nil] || [tomb.middleName isEqual:NULL] || [tomb.middleName isEqualToString:@""])
+        if([tomb.middleName length] == 1)
         {
-            cell.textLabel.text = [NSString stringWithFormat: @"%@ %@", tomb.firstName, tomb.lastName, nil];
+            tomb.middleName = [tomb.middleName stringByAppendingString:@"."];
         }
-        else
-        {
-            if([tomb.middleName length] == 1)
-            {
-                tomb.middleName = [tomb.middleName stringByAppendingString:@"."];
-            }
-            cell.textLabel.text = [NSString stringWithFormat: @"%@ %@ %@", tomb.firstName, tomb.middleName ,tomb.lastName, nil];
-        }
-        
-        
-        if(![tomb.birthDate isEqualToString:@""] && ![tomb.deathDate isEqualToString:@""])
-        {
-            cell.detailTextLabel.text = [NSString stringWithFormat: @"%@ - %@", [tomb.birthDate substringToIndex:4], [tomb.deathDate substringToIndex:4], nil];
-        }
-        else
-        {
-            cell.detailTextLabel.text = @"";
-        }
+        cell.textLabel.text = [NSString stringWithFormat: @"%@ %@ %@", tomb.firstName, tomb.middleName ,tomb.lastName, nil];
+    }
+    
+    
+    if(![tomb.birthDate isEqualToString:@""] && ![tomb.deathDate isEqualToString:@""])
+    {
+        cell.detailTextLabel.text = [NSString stringWithFormat: @"%@ - %@", [tomb.birthDate substringToIndex:4], [tomb.deathDate substringToIndex:4], nil];
+    }
+    else
+    {
+        cell.detailTextLabel.text = @"";
     }
     
     return cell;
@@ -193,9 +205,41 @@ shouldReloadTableForSearchString:(NSString *)searchString
 {
     if ([[segue identifier] isEqualToString:@"ShowTombDetails"])
     {
-        TombDetailViewController *vc = [segue destinationViewController];
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        [vc setSelectedTomb:[self.tombArray objectAtIndex:indexPath.row]];
+        TombDetailViewController *tombDetailViewController = [segue destinationViewController];
+        
+        // In order to manipulate the destination view controller, another check on which table (search or normal) is displayed is needed
+        if([self.searchDisplayController isActive]) {
+            NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+            Tomb *destinationTomb = [self.filteredTombArray objectAtIndex:[indexPath row]];
+            [tombDetailViewController setSelectedTomb:destinationTomb];
+        }
+        else {
+            NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+            Tomb *destinationTomb = [self.tombArray objectAtIndex:[indexPath row]];
+            [tombDetailViewController setSelectedTomb:destinationTomb];
+        }
     }
 }
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    // Tells the table data source to reload when text changes
+    [self filterContentForSearchText:searchString scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
+    // Tells the table data source to reload when scope bar selection changes
+    [self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
 @end

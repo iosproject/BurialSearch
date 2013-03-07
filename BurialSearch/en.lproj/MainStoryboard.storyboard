@@ -29,17 +29,23 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackOpaque" id="1UO-4K-9u3">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackOpaque" showsScopeBar="YES" id="1UO-4K-9u3">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
+                            <scopeButtonTitles>
+                                <string>Name</string>
+                                <string>Y.O.D.</string>
+                                <string>Age</string>
+                                <string>Section</string>
+                            </scopeButtonTitles>
                             <connections>
                                 <outlet property="delegate" destination="c6W-UZ-bEj" id="d27-9N-PVO"/>
                             </connections>
                         </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" restorationIdentifier="" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TombCell" textLabel="NdL-lp-UgK" detailTextLabel="6Vm-r2-BYz" style="IBUITableViewCellStyleSubtitle" id="RqC-Mk-1jF">
-                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="110" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
@@ -70,7 +76,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Search" id="iWl-tk-xg0">
                         <barButtonItem key="backBarButtonItem" title="Back" id="9q2-AE-ad8"/>
-                        <barButtonItem key="rightBarButtonItem" title="Options" id="ceu-pb-sOg"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="Qs4-2s-0hb">
+                            <connections>
+                                <action selector="goToSearch:" destination="c6W-UZ-bEj" id="51W-OU-Y3e"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="1UO-4K-9u3" id="XKn-rJ-A8j"/>
@@ -252,11 +262,11 @@
             </objects>
             <point key="canvasLocation" x="579" y="-285"/>
         </scene>
-        <!--Navigation Controller - Search-->
+        <!--Navigation Controller-->
         <scene sceneID="xFU-Wh-RTp">
             <objects>
                 <navigationController id="VCa-9x-8Rg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" id="kym-Mc-n8F"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="kym-Mc-n8F"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="C9W-7a-wXm">
@@ -283,6 +293,7 @@
         <class className="SearchTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SearchTableViewController.h"/>
             <relationships>
+                <relationship kind="action" name="goToSearch:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
             </relationships>
         </class>

@@ -10,9 +10,10 @@
 
 @interface SearchTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
 
-@property (nonatomic) NSArray *tombArray;
-@property (nonatomic) NSArray *searchResults;
+@property (strong,nonatomic) NSArray *tombArray;
+@property (strong,nonatomic) NSMutableArray *filteredTombArray;
 
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+-(IBAction)goToSearch:(id)sender;
 
 @end
