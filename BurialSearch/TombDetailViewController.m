@@ -7,6 +7,7 @@
 //
 
 #import "TombDetailViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface TombDetailViewController ()
 
@@ -17,8 +18,8 @@
 @synthesize selectedTomb = _selectedTomb;
 @synthesize scrollView = _scrollView;
 @synthesize epitaphTextView = _epitaphTextView,
-bornTextField = _bornTextField,
-diedTextField = _diedTextField;
+            bornTextField = _bornTextField,
+            diedTextField = _diedTextField;
 
 - (void)viewDidLoad
 {
@@ -44,8 +45,23 @@ diedTextField = _diedTextField;
     else
         [_ageTextField setText:[NSString stringWithFormat:@"%@ years", _selectedTomb.years]];
     
+    [self designEpitaphTextView];
     [_epitaphTextView setText: [NSString stringWithFormat:@"%@", _selectedTomb.epitaph,nil]];
+    
+    self.epitaphTextView.contentSize = [self.epitaphTextView.text sizeWithFont:[UIFont systemFontOfSize:14]
+                                               constrainedToSize:CGSizeMake(100, 200)
+                                                   lineBreakMode:UIViewAutoresizingFlexibleHeight];
+    
     [self.scrollView flashScrollIndicators];
+}
+
+- (void) designEpitaphTextView
+{
+    [_epitaphTextView.layer setBackgroundColor: [[UIColor whiteColor] CGColor]];
+    [_epitaphTextView.layer setBorderColor: [[UIColor grayColor] CGColor]];
+    [_epitaphTextView.layer setBorderWidth: 1.0];
+    [_epitaphTextView.layer setCornerRadius:8.0f];
+    [_epitaphTextView.layer setMasksToBounds:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated

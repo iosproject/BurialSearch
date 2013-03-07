@@ -64,6 +64,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3040AA5F16E8EBF20002960A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				30AF853916E7F0DE00277686 /* HomeViewController.h */,
+				30AF853A16E7F0DE00277686 /* HomeViewController.m */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		3040AA6016E8EC2C0002960A /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				30AF854116E7F1BF00277686 /* SearchTableViewController.h */,
+				30AF854216E7F1BF00277686 /* SearchTableViewController.m */,
+				30AF854416E7F20200277686 /* TombDetailViewController.h */,
+				30AF854516E7F20200277686 /* TombDetailViewController.m */,
+				30AF854716E7F2D700277686 /* Tomb.h */,
+				30AF854816E7F2D700277686 /* Tomb.m */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 		30AF851216E7F0DE00277686 = {
 			isa = PBXGroup;
 			children = (
@@ -94,18 +116,9 @@
 		30AF852416E7F0DE00277686 /* BurialSearch */ = {
 			isa = PBXGroup;
 			children = (
-				30AF852D16E7F0DE00277686 /* HomeAppDelegate.h */,
-				30AF852E16E7F0DE00277686 /* HomeAppDelegate.m */,
 				30AF853616E7F0DE00277686 /* MainStoryboard.storyboard */,
-				30AF854716E7F2D700277686 /* Tomb.h */,
-				30AF854816E7F2D700277686 /* Tomb.m */,
-				30AF854416E7F20200277686 /* TombDetailViewController.h */,
-				30AF854516E7F20200277686 /* TombDetailViewController.m */,
-				30AF854116E7F1BF00277686 /* SearchTableViewController.h */,
-				30AF854216E7F1BF00277686 /* SearchTableViewController.m */,
-				30AF853916E7F0DE00277686 /* HomeViewController.h */,
-				30AF853A16E7F0DE00277686 /* HomeViewController.m */,
-				30AF854A16E7F3C800277686 /* tomb_database.json */,
+				3040AA6016E8EC2C0002960A /* Search */,
+				3040AA5F16E8EBF20002960A /* Home */,
 				30AF852516E7F0DE00277686 /* Supporting Files */,
 			);
 			path = BurialSearch;
@@ -114,6 +127,9 @@
 		30AF852516E7F0DE00277686 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				30AF854A16E7F3C800277686 /* tomb_database.json */,
+				30AF852D16E7F0DE00277686 /* HomeAppDelegate.h */,
+				30AF852E16E7F0DE00277686 /* HomeAppDelegate.m */,
 				30AF852616E7F0DE00277686 /* BurialSearch-Info.plist */,
 				30AF852716E7F0DE00277686 /* InfoPlist.strings */,
 				30AF852A16E7F0DE00277686 /* main.m */,
@@ -321,6 +337,7 @@
 				30AF854016E7F0DE00277686 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

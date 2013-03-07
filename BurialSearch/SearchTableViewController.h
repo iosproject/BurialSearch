@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SearchTableViewController : UITableViewController
+@interface SearchTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
 
-@property (nonatomic) NSMutableArray *tombArray;
+@property (nonatomic) NSArray *tombArray;
+@property (nonatomic) NSArray *searchResults;
+
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
