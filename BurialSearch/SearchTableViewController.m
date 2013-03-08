@@ -61,7 +61,7 @@
 
 - (void) readLocalJSON
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"tomb_database" ofType:@"json"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"new_tomb_database" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     
     NSError *error = nil;
@@ -84,27 +84,33 @@
  
     for (NSDictionary *dict in jsonTombData)
     {
-        Tomb *tomb = [[Tomb alloc]initWithFirstName:[dict objectForKey:@"FirstName"]
-                                        andLastName:[dict objectForKey:@"LastName"]
-                                      andMiddleName:[dict objectForKey:@"Middle"]
-                                       andBirthDate:([[dict objectForKey:@"DOB"] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:@"DOB"]
-                                       andDeathDate:([[dict objectForKey:@"DOD"] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:@"DOD"]
-                                          andPrefix:[dict objectForKey:@"Prefix"]
-                                          andSuffix:[dict objectForKey:@"Suffix"]
-                                             andRef:[dict objectForKey:@"Ref"]
-                                            andTour:[dict objectForKey:@"Tour"]
-                                        andInternet:[dict objectForKey:@"InternetLink"]
-                                           andNotes:[dict objectForKey:@"Notes"]
-                                    andSextonsNotes:[dict objectForKey:@"SextonsNotes"]
-                                         andEpitaph:[dict objectForKey:@"Epitaph"]
-                                         andSection:[dict objectForKey:@"Section"]
-                                              andID:[dict objectForKey:@"ID"]
-                                        andSandston:[dict objectForKey:@"Sandstone"]
-                                           andYears:([[dict objectForKey:@"DOB"] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:@"Years"]
-                                          andMonths:([[dict objectForKey:@"DOB"] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:@"Months"]
-                                       andCondition:[dict objectForKey:@"Condition"]
-                                         andVeteran:[dict objectForKey:@"Veteran"]
-                                        andUniqueId:[dict objectForKey:@"UID"]];
+        Tomb *tomb = [[Tomb alloc]initWithFirstName:[dict objectForKey:FPC_TOMB_FIRSTNAME]
+                                        andLastName:[dict objectForKey:FPC_TOMB_LASTNAME]
+                                      andMiddleName:[dict objectForKey:FPC_TOMB_MIDDLENAME]
+                                       andBirthDate:([[dict objectForKey:FPC_TOMB_DOB] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:FPC_TOMB_DOB]
+                                       andDeathDate:([[dict objectForKey:FPC_TOMB_DOD] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:FPC_TOMB_DOD]
+                                          andPrefix:[dict objectForKey:FPC_TOMB_PREFIX]
+                                          andSuffix:[dict objectForKey:FPC_TOMB_SUFFIX]
+                                            andTour:[dict objectForKey:FPC_TOMB_TOUR]
+                                        andInternet:[dict objectForKey:FPC_TOMB_INTERNETLINK]
+                                           andNotes:[dict objectForKey:FPC_TOMB_NOTES]
+                                    andSextonsNotes:[dict objectForKey:FPC_TOMB_NOTES]
+                                         andEpitaph:[dict objectForKey:FPC_TOMB_EPITAPH]
+                                         andSection:[dict objectForKey:FPC_TOMB_SECTION]
+                                        andMaterial:[dict objectForKey:FPC_TOMB_MATERIAL]
+                                           andYears:([[dict objectForKey:FPC_TOMB_YEARS] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:FPC_TOMB_YEARS]
+                                          andMonths:([[dict objectForKey:FPC_TOMB_MONTHS] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:FPC_TOMB_MONTHS]
+                                         andVeteran:[dict objectForKey:FPC_TOMB_VETERAN]
+                                        andUniqueId:[dict objectForKey:FPC_TOMB_UID]
+                                        andStanding:[dict objectForKey:FPC_TOMB_STANDING]
+                                            andPoem:[dict objectForKey:FPC_TOMB_POEM]
+                                             andWar:[dict objectForKey:FPC_TOMB_WAR]
+                                           andApDob:[dict objectForKey:FPC_TOMB_APDOB]
+                                    andCauseOfDeath:[dict objectForKey:FPC_TOMB_CAUSE_OF_DEATH]
+                                       andHeadstone:[dict objectForKey:FPC_TOMB_HEADSTONE]
+                                     andDateCreated:[dict objectForKey: FPC_TOMB_DATE_CREATED]
+                                    andDateModified:[dict objectForKey:FPC_TOMB_DATE_MODIFIED]];
+        
         [tempArray addObject:tomb];
         //NSLog(@"%@", [tomb viewDescription]);
     }

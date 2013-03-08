@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		304DA18E16EA424700572187 /* new_tomb_database.json in Resources */ = {isa = PBXBuildFile; fileRef = 304DA18D16EA424700572187 /* new_tomb_database.json */; };
 		30AF851F16E7F0DE00277686 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF851E16E7F0DE00277686 /* UIKit.framework */; };
 		30AF852116E7F0DE00277686 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF852016E7F0DE00277686 /* Foundation.framework */; };
 		30AF852316E7F0DE00277686 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF852216E7F0DE00277686 /* CoreGraphics.framework */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		304DA18D16EA424700572187 /* new_tomb_database.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tomb_database.json; sourceTree = "<group>"; };
 		30AF851B16E7F0DE00277686 /* BurialSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BurialSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30AF851E16E7F0DE00277686 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		30AF852016E7F0DE00277686 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -127,6 +129,7 @@
 		30AF852516E7F0DE00277686 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				304DA18D16EA424700572187 /* new_tomb_database.json */,
 				30AF854A16E7F3C800277686 /* tomb_database.json */,
 				30AF852D16E7F0DE00277686 /* HomeAppDelegate.h */,
 				30AF852E16E7F0DE00277686 /* HomeAppDelegate.m */,
@@ -199,6 +202,7 @@
 				30AF853516E7F0DE00277686 /* Default-568h@2x.png in Resources */,
 				30AF853816E7F0DE00277686 /* MainStoryboard.storyboard in Resources */,
 				30AF854B16E7F3C800277686 /* tomb_database.json in Resources */,
+				304DA18E16EA424700572187 /* new_tomb_database.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

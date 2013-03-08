@@ -242,11 +242,11 @@
             </objects>
             <point key="canvasLocation" x="-173" y="159"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller - Home-->
         <scene sceneID="akf-MQ-Ul5">
             <objects>
                 <navigationController id="qlf-Sl-8f8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="m0e-ex-nde"/>
+                    <tabBarItem key="tabBarItem" title="Home" id="m0e-ex-nde"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="4tQ-0i-g5x">
