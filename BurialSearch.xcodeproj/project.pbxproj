@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		304DA18E16EA424700572187 /* new_tomb_database.json in Resources */ = {isa = PBXBuildFile; fileRef = 304DA18D16EA424700572187 /* new_tomb_database.json */; };
+		3012D13A16F0BB1500343A3E /* ssimage01.png in Resources */ = {isa = PBXBuildFile; fileRef = 3012D13616F0BB1500343A3E /* ssimage01.png */; };
+		3012D13B16F0BB1500343A3E /* ssimage02.png in Resources */ = {isa = PBXBuildFile; fileRef = 3012D13716F0BB1500343A3E /* ssimage02.png */; };
+		3012D13C16F0BB1500343A3E /* ssimage03.png in Resources */ = {isa = PBXBuildFile; fileRef = 3012D13816F0BB1500343A3E /* ssimage03.png */; };
+		3012D13D16F0BB1500343A3E /* ssimage04.png in Resources */ = {isa = PBXBuildFile; fileRef = 3012D13916F0BB1500343A3E /* ssimage04.png */; };
+		3056A25B16F9EA2B0079A58F /* SlideShowScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3056A25A16F9EA2B0079A58F /* SlideShowScrollView.m */; };
 		30AF851F16E7F0DE00277686 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF851E16E7F0DE00277686 /* UIKit.framework */; };
 		30AF852116E7F0DE00277686 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF852016E7F0DE00277686 /* Foundation.framework */; };
 		30AF852316E7F0DE00277686 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF852216E7F0DE00277686 /* CoreGraphics.framework */; };
@@ -19,14 +23,18 @@
 		30AF853516E7F0DE00277686 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30AF853416E7F0DE00277686 /* Default-568h@2x.png */; };
 		30AF853816E7F0DE00277686 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30AF853616E7F0DE00277686 /* MainStoryboard.storyboard */; };
 		30AF853B16E7F0DE00277686 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AF853A16E7F0DE00277686 /* HomeViewController.m */; };
-		30AF854316E7F1BF00277686 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AF854216E7F1BF00277686 /* SearchTableViewController.m */; };
-		30AF854616E7F20200277686 /* TombDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AF854516E7F20200277686 /* TombDetailViewController.m */; };
-		30AF854916E7F2D700277686 /* Tomb.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AF854816E7F2D700277686 /* Tomb.m */; };
-		30AF854B16E7F3C800277686 /* tomb_database.json in Resources */ = {isa = PBXBuildFile; fileRef = 30AF854A16E7F3C800277686 /* tomb_database.json */; };
+		30FD174816EF91110043DDE8 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FD174316EF91110043DDE8 /* SearchTableViewController.m */; };
+		30FD174916EF91110043DDE8 /* Tomb.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FD174516EF91110043DDE8 /* Tomb.m */; };
+		30FD174A16EF91110043DDE8 /* TombDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FD174716EF91110043DDE8 /* TombDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		304DA18D16EA424700572187 /* new_tomb_database.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tomb_database.json; sourceTree = "<group>"; };
+		3012D13616F0BB1500343A3E /* ssimage01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ssimage01.png; sourceTree = "<group>"; };
+		3012D13716F0BB1500343A3E /* ssimage02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ssimage02.png; sourceTree = "<group>"; };
+		3012D13816F0BB1500343A3E /* ssimage03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ssimage03.png; sourceTree = "<group>"; };
+		3012D13916F0BB1500343A3E /* ssimage04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ssimage04.png; sourceTree = "<group>"; };
+		3056A25916F9EA2B0079A58F /* SlideShowScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideShowScrollView.h; sourceTree = "<group>"; };
+		3056A25A16F9EA2B0079A58F /* SlideShowScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideShowScrollView.m; sourceTree = "<group>"; };
 		30AF851B16E7F0DE00277686 /* BurialSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BurialSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30AF851E16E7F0DE00277686 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		30AF852016E7F0DE00277686 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -43,13 +51,12 @@
 		30AF853716E7F0DE00277686 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		30AF853916E7F0DE00277686 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		30AF853A16E7F0DE00277686 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		30AF854116E7F1BF00277686 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
-		30AF854216E7F1BF00277686 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
-		30AF854416E7F20200277686 /* TombDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TombDetailViewController.h; sourceTree = "<group>"; };
-		30AF854516E7F20200277686 /* TombDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TombDetailViewController.m; sourceTree = "<group>"; };
-		30AF854716E7F2D700277686 /* Tomb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tomb.h; sourceTree = "<group>"; };
-		30AF854816E7F2D700277686 /* Tomb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tomb.m; sourceTree = "<group>"; };
-		30AF854A16E7F3C800277686 /* tomb_database.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tomb_database.json; sourceTree = "<group>"; };
+		30FD174216EF91110043DDE8 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
+		30FD174316EF91110043DDE8 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
+		30FD174416EF91110043DDE8 /* Tomb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tomb.h; sourceTree = "<group>"; };
+		30FD174516EF91110043DDE8 /* Tomb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tomb.m; sourceTree = "<group>"; };
+		30FD174616EF91110043DDE8 /* TombDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TombDetailViewController.h; sourceTree = "<group>"; };
+		30FD174716EF91110043DDE8 /* TombDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TombDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +78,8 @@
 			children = (
 				30AF853916E7F0DE00277686 /* HomeViewController.h */,
 				30AF853A16E7F0DE00277686 /* HomeViewController.m */,
+				3056A25916F9EA2B0079A58F /* SlideShowScrollView.h */,
+				3056A25A16F9EA2B0079A58F /* SlideShowScrollView.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -78,12 +87,12 @@
 		3040AA6016E8EC2C0002960A /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				30AF854116E7F1BF00277686 /* SearchTableViewController.h */,
-				30AF854216E7F1BF00277686 /* SearchTableViewController.m */,
-				30AF854416E7F20200277686 /* TombDetailViewController.h */,
-				30AF854516E7F20200277686 /* TombDetailViewController.m */,
-				30AF854716E7F2D700277686 /* Tomb.h */,
-				30AF854816E7F2D700277686 /* Tomb.m */,
+				30FD174216EF91110043DDE8 /* SearchTableViewController.h */,
+				30FD174316EF91110043DDE8 /* SearchTableViewController.m */,
+				30FD174416EF91110043DDE8 /* Tomb.h */,
+				30FD174516EF91110043DDE8 /* Tomb.m */,
+				30FD174616EF91110043DDE8 /* TombDetailViewController.h */,
+				30FD174716EF91110043DDE8 /* TombDetailViewController.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -129,8 +138,10 @@
 		30AF852516E7F0DE00277686 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				304DA18D16EA424700572187 /* new_tomb_database.json */,
-				30AF854A16E7F3C800277686 /* tomb_database.json */,
+				3012D13616F0BB1500343A3E /* ssimage01.png */,
+				3012D13716F0BB1500343A3E /* ssimage02.png */,
+				3012D13816F0BB1500343A3E /* ssimage03.png */,
+				3012D13916F0BB1500343A3E /* ssimage04.png */,
 				30AF852D16E7F0DE00277686 /* HomeAppDelegate.h */,
 				30AF852E16E7F0DE00277686 /* HomeAppDelegate.m */,
 				30AF852616E7F0DE00277686 /* BurialSearch-Info.plist */,
@@ -201,8 +212,10 @@
 				30AF853316E7F0DE00277686 /* Default@2x.png in Resources */,
 				30AF853516E7F0DE00277686 /* Default-568h@2x.png in Resources */,
 				30AF853816E7F0DE00277686 /* MainStoryboard.storyboard in Resources */,
-				30AF854B16E7F3C800277686 /* tomb_database.json in Resources */,
-				304DA18E16EA424700572187 /* new_tomb_database.json in Resources */,
+				3012D13A16F0BB1500343A3E /* ssimage01.png in Resources */,
+				3012D13B16F0BB1500343A3E /* ssimage02.png in Resources */,
+				3012D13C16F0BB1500343A3E /* ssimage03.png in Resources */,
+				3012D13D16F0BB1500343A3E /* ssimage04.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,9 +229,10 @@
 				30AF852B16E7F0DE00277686 /* main.m in Sources */,
 				30AF852F16E7F0DE00277686 /* HomeAppDelegate.m in Sources */,
 				30AF853B16E7F0DE00277686 /* HomeViewController.m in Sources */,
-				30AF854316E7F1BF00277686 /* SearchTableViewController.m in Sources */,
-				30AF854616E7F20200277686 /* TombDetailViewController.m in Sources */,
-				30AF854916E7F2D700277686 /* Tomb.m in Sources */,
+				30FD174816EF91110043DDE8 /* SearchTableViewController.m in Sources */,
+				30FD174916EF91110043DDE8 /* Tomb.m in Sources */,
+				30FD174A16EF91110043DDE8 /* TombDetailViewController.m in Sources */,
+				3056A25B16F9EA2B0079A58F /* SlideShowScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

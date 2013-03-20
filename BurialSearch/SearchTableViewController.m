@@ -8,7 +8,12 @@
 
 #import "SearchTableViewController.h"
 #import "TombDetailViewController.h"
+#import "QuartzCore/QuartzCore.h"
 #import "Tomb.h"
+
+#define LATEST_TOMB_DB_URL @"http://fpcenj.org/FPCENJ/AppDB/new_tomb_database.json"
+#define LATEST_TOMB_DB_URL_2 @"http://localhost/FPC_Cemetery_Admin/view_tombdb.php"
+#define BACKGROUND_QUEUE dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
 @interface SearchTableViewController ()
 
@@ -18,10 +23,77 @@
 
 @synthesize tombArray = _tombArray,
             searchBar = _searchBar,
+            activityView = _activityView,
+            loadingView = _loadingView,
+            loadingLabel = _loadingLabel,
             filteredTombArray = _filteredTombArray;
 
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // config the search bar.
+    [_searchBar setShowsScopeBar:NO];
+    [_searchBar sizeToFit];
+    
+    // Hide the search bar until user scrolls up.
+    CGRect newBounds = self.tableView.bounds;
+    newBounds.origin.y = newBounds.origin.y + _searchBar.bounds.size.height;
+    self.tableView.bounds = newBounds;
+    
+    // read the database
+    [self showLoadingView];
+    [self readRemoteJSON];
+    
+    // initialize the array to hold search results.
+    _filteredTombArray = [NSMutableArray arrayWithCapacity:[_tombArray count]];
+}
 
+/*
+#define urlString @"http://www.google.com"
+
+- (BOOL) connectedToInternet
+{
+    NSError *error = nil;
+    NSString *URLString = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlString]
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:&error];
+   
+    return URLString != nil;
+}
+*/
+
+- (void) showLoadingView
+{
+    _loadingView = [[UIView alloc] initWithFrame:CGRectMake(75, 155, 170, 170)];
+    _loadingView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0.25 alpha:0.25];
+    _loadingView.layer.borderColor = [[UIColor blueColor] CGColor];
+    _loadingView.clipsToBounds = YES;
+    _loadingView.layer.cornerRadius = 10.0;
+
+    _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _activityView.frame = CGRectMake(65, 40, _activityView.bounds.size.width, _activityView.bounds.size.height);
+    [_loadingView addSubview:_activityView];
+
+    _loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 115, 130, 22)];
+    _loadingLabel.backgroundColor = [UIColor clearColor];
+    _loadingLabel.textColor = [UIColor whiteColor];
+    _loadingLabel.adjustsFontSizeToFitWidth = YES;
+    _loadingLabel.textAlignment = NSTextAlignmentCenter;
+    _loadingLabel.text = @"Loading...";
+    [_loadingView addSubview:_loadingLabel];
+    
+    [self.view addSubview:_loadingView];
+    [_activityView startAnimating];
+
+}
+
+- (void) hideLoadingView
+{
+    [_activityView stopAnimating];
+    [_loadingView removeFromSuperview];
+}
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
@@ -33,32 +105,45 @@
 	// Filter the array using NSPredicate
     NSPredicate *predicate;
     NSArray *tempArray;
-    
-    if([scope isEqualToString:@"Name"])
+    if ((id)scope != [NSNull null])
     {
-        predicate = [NSPredicate predicateWithFormat:@"(fullName CONTAINS[cd] %@) OR (firstAndLastName CONTAINS[cd] %@)", searchText, searchText];
-        tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
+        if([scope isEqualToString:@"Name"])
+        {
+            predicate = [NSPredicate predicateWithFormat:@"(fullName CONTAINS[cd] %@) OR (firstAndLastName CONTAINS[cd] %@)", searchText, searchText];
+            tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
+        }
+        else if ([scope isEqualToString:@"Y.O.D."])
+        {
+            predicate = [NSPredicate predicateWithFormat:@"(deathDate CONTAINS[cd] %@)", searchText];
+            tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
+        }
+        else if ([scope isEqualToString:@"Age"])
+        {
+            predicate = [NSPredicate predicateWithFormat:@"(years CONTAINS[cd] %@)", searchText];
+            tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
+        }
+        else if ([scope isEqualToString:@"Section"])
+        {
+            predicate = [NSPredicate predicateWithFormat:@"(section CONTAINS[cd] %@)", searchText];
+            tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
+        }
+        
+        _filteredTombArray = [NSMutableArray arrayWithArray:tempArray];
     }
-    else if ([scope isEqualToString:@"Y.O.D."])
-    {
-        predicate = [NSPredicate predicateWithFormat:@"(deathDate CONTAINS[cd] %@)", searchText];
-        tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
-    }
-    else if ([scope isEqualToString:@"Age"])
-    {
-        predicate = [NSPredicate predicateWithFormat:@"(years CONTAINS[cd] %@)", searchText];
-        tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
-    }
-    else if ([scope isEqualToString:@"Section"])
-    {
-        predicate = [NSPredicate predicateWithFormat:@"(section CONTAINS[cd] %@)", searchText];
-        tempArray = [_tombArray filteredArrayUsingPredicate:predicate];
-    }
-    
-    _filteredTombArray = [NSMutableArray arrayWithArray:tempArray];
 }
 
+- (void) readRemoteJSON
+{
+    dispatch_async(BACKGROUND_QUEUE, ^{
+        
+        // GET DATA
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: LATEST_TOMB_DB_URL_2]];
+    
+        [self performSelectorOnMainThread:@selector(buildTombObjectsFromData:) withObject:data waitUntilDone:YES];
 
+    });
+}
+/*
 - (void) readLocalJSON
 {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"new_tomb_database" ofType:@"json"];
@@ -68,27 +153,41 @@
     NSDictionary *jsonTombData = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:kNilOptions
                                                                    error:&error];
-    /*
+    
     for (NSDictionary *tomb in jsonTombData)
     {
         NSLog(@"%@ ", [tomb objectForKey:@"FirstName"]);
     }
     NSLog(@"%d", [jsonTombData count]);
-    */
-    [self buildTombObjectsFromDictionary:jsonTombData];
-}
+    
+    //[self buildTombObjectsFromDictionary:jsonTombData];
+}*/
 
--(void)buildTombObjectsFromDictionary:(NSDictionary *)jsonTombData
+-(void)buildTombObjectsFromData:(NSData *)jsonTombData
 {
+    NSError *error = nil;
+    NSDictionary *jsonTombDict = [NSJSONSerialization JSONObjectWithData:jsonTombData
+                                                                 options:kNilOptions
+                                                                   error:&error];
+    
+    NSArray* latestGraves = [jsonTombDict objectForKey:@"items"];
+    
+    //NSLog(@"graves: %@", latestGraves);
+    
     NSMutableArray *tempArray = [[NSMutableArray alloc]init];
+    NSDictionary *dict = nil;
+    NSLog(@"graves: %d", [latestGraves count]);
  
-    for (NSDictionary *dict in jsonTombData)
+    //for (NSDictionary *dict in jsonTombData)
+    for (int i = 0; i < latestGraves.count; i++)
     {
+        dict = [latestGraves objectAtIndex:i];
+        
         Tomb *tomb = [[Tomb alloc]initWithFirstName:[dict objectForKey:FPC_TOMB_FIRSTNAME]
                                         andLastName:[dict objectForKey:FPC_TOMB_LASTNAME]
                                       andMiddleName:[dict objectForKey:FPC_TOMB_MIDDLENAME]
-                                       andBirthDate:([[dict objectForKey:FPC_TOMB_DOB] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:FPC_TOMB_DOB]
-                                       andDeathDate:([[dict objectForKey:FPC_TOMB_DOD] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:FPC_TOMB_DOD]
+                                       andBirthDate:[dict objectForKey:FPC_TOMB_DOB]
+                                       andDeathDate:[dict objectForKey:FPC_TOMB_DOD]
                                           andPrefix:[dict objectForKey:FPC_TOMB_PREFIX]
                                           andSuffix:[dict objectForKey:FPC_TOMB_SUFFIX]
                                             andTour:[dict objectForKey:FPC_TOMB_TOUR]
@@ -98,8 +197,8 @@
                                          andEpitaph:[dict objectForKey:FPC_TOMB_EPITAPH]
                                          andSection:[dict objectForKey:FPC_TOMB_SECTION]
                                         andMaterial:[dict objectForKey:FPC_TOMB_MATERIAL]
-                                           andYears:([[dict objectForKey:FPC_TOMB_YEARS] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:FPC_TOMB_YEARS]
-                                          andMonths:([[dict objectForKey:FPC_TOMB_MONTHS] isEqualToString:@""]) ? @"n/a " : [dict objectForKey:FPC_TOMB_MONTHS]
+                                           andYears:[dict objectForKey:FPC_TOMB_YEARS] 
+                                          andMonths:[dict objectForKey:FPC_TOMB_MONTHS]
                                          andVeteran:[dict objectForKey:FPC_TOMB_VETERAN]
                                         andUniqueId:[dict objectForKey:FPC_TOMB_UID]
                                         andStanding:[dict objectForKey:FPC_TOMB_STANDING]
@@ -116,38 +215,9 @@
     }
     
     self.tombArray = [[NSArray alloc]initWithArray:tempArray];
-}
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    // style the search bar
-    [_searchBar setShowsScopeBar:NO];
-    [_searchBar sizeToFit];
-    
-    // Hide the search bar until user scrolls up
-    CGRect newBounds = self.tableView.bounds;
-    newBounds.origin.y = newBounds.origin.y + _searchBar.bounds.size.height;
-    self.tableView.bounds = newBounds;
-    
-    // read local JSON file
-    [self readLocalJSON];
-    
-    // initialize the array to hold search results
-    _filteredTombArray = [NSMutableArray arrayWithCapacity:[_tombArray count]];
-    
-    // Reload the table
     [[self tableView] reloadData];
+    [self hideLoadingView];
+
 }
 
 -(IBAction)goToSearch:(id)sender
@@ -179,6 +249,8 @@
     } else {
         tomb = [self.tombArray objectAtIndex:indexPath.row];
     }
+    
+    
      
     // configure the srtings
     if([tomb.middleName isEqual:nil] || [tomb.middleName isEqual:NULL] || [tomb.middleName isEqualToString:@""])
@@ -194,7 +266,7 @@
         cell.textLabel.text = [NSString stringWithFormat: @"%@ %@ %@", tomb.firstName, tomb.middleName ,tomb.lastName, nil];
     }
     
-    
+
     if(![tomb.birthDate isEqualToString:@""] && ![tomb.deathDate isEqualToString:@""])
     {
         cell.detailTextLabel.text = [NSString stringWithFormat: @"%@ - %@", [tomb.birthDate substringToIndex:4], [tomb.deathDate substringToIndex:4], nil];
@@ -203,6 +275,7 @@
     {
         cell.detailTextLabel.text = @"";
     }
+
     
     return cell;
 }

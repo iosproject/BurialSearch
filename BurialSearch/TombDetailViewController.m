@@ -19,17 +19,27 @@
 @synthesize scrollView = _scrollView;
 @synthesize epitaphTextView = _epitaphTextView,
             bornTextField = _bornTextField,
-            diedTextField = _diedTextField;
+            diedTextField = _diedTextField,
+            veteranTextField = _veteranTextField,
+            causeOfDeathTextField = _causeOfDeathTextField;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.scrollView setContentSize:CGSizeMake(320, 455)];
+ 
     [_bornTextField setText:_selectedTomb.birthDate];
     [_diedTextField setText:_selectedTomb.deathDate];
     [_sectionTextField setText:_selectedTomb.section];
+    [_causeOfDeathTextField setText: _selectedTomb.causeOfDeath];
+    [self setAgeString];
+    [self setVeteranString];
     
+    [_epitaphTextView setText: [NSString stringWithFormat:@"%@", _selectedTomb.epitaph,nil]];
+    [self styleEpitaphTextView];
+}
+
+- (void) setAgeString
+{
     if ([_selectedTomb.years isEqualToString:@"0"])
     {
         [_ageTextField setText:[NSString stringWithFormat:@"%@ months", _selectedTomb.months]];
@@ -44,24 +54,37 @@
     }
     else
         [_ageTextField setText:[NSString stringWithFormat:@"%@ years", _selectedTomb.years]];
-    
-    [self designEpitaphTextView];
-    [_epitaphTextView setText: [NSString stringWithFormat:@"%@", _selectedTomb.epitaph,nil]];
-    
-    self.epitaphTextView.contentSize = [self.epitaphTextView.text sizeWithFont:[UIFont systemFontOfSize:14]
-                                               constrainedToSize:CGSizeMake(100, 200)
-                                                   lineBreakMode:UIViewAutoresizingFlexibleHeight];
-    
-    [self.scrollView flashScrollIndicators];
 }
 
-- (void) designEpitaphTextView
+- (void) setVeteranString
+{
+    if([_selectedTomb.veteran isEqualToString:@"0"])
+    {
+        [_veteranTextField setText:@"No"];
+    }
+    else
+        [_veteranTextField setText:@"Yes"];
+}
+
+- (void) styleEpitaphTextView
 {
     [_epitaphTextView.layer setBackgroundColor: [[UIColor whiteColor] CGColor]];
     [_epitaphTextView.layer setBorderColor: [[UIColor grayColor] CGColor]];
     [_epitaphTextView.layer setBorderWidth: 1.0];
     [_epitaphTextView.layer setCornerRadius:8.0f];
     [_epitaphTextView.layer setMasksToBounds:YES];
+    
+    CGRect frame = _epitaphTextView.frame;
+    frame.size.height = _epitaphTextView.contentSize.height;
+    _epitaphTextView.frame = frame;
+    
+    [self setScrollViewHeight:_epitaphTextView.contentSize.height];
+}
+
+-(void) setScrollViewHeight:(int)height
+{
+    height -= 150;
+    [self.scrollView setContentSize:CGSizeMake(320, 455+height)];
 }
 
 - (void)viewWillAppear:(BOOL)animated

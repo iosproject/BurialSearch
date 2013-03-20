@@ -19,5 +19,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *sectionTextField;
 @property (strong, nonatomic) IBOutlet UITextView *epitaphTextView;
 
+@property (strong, nonatomic) IBOutlet UITextField *causeOfDeathTextField;
+@property (strong, nonatomic) IBOutlet UITextField *veteranTextField;
 
 @end
